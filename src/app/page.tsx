@@ -17,6 +17,7 @@ function MenuCarousel() {
   const [current, setCurrent] = useState(0);
   const [touchStart, setTouchStart] = useState<number | null>(null);
   const [touchEnd, setTouchEnd] = useState<number | null>(null);
+  const [dragX, setDragX] = useState(0);
   const [isMobile, setIsMobile] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
 
@@ -31,23 +32,29 @@ function MenuCarousel() {
     if (index < 0) index = menuImages.length - 1;
     if (index >= menuImages.length) index = 0;
     setCurrent(index);
+    setDragX(0);
   }, []);
 
   const handleTouchStart = (e: React.TouchEvent) => {
     setTouchStart(e.touches[0].clientX);
+    setDragX(0);
     setTouchEnd(null);
   };
 
   const handleTouchMove = (e: React.TouchEvent) => {
-    setTouchEnd(e.touches[0].clientX);
+    const x = e.touches[0].clientX;
+    setTouchEnd(x);
+    if (touchStart !== null) setDragX(x - touchStart);
   };
 
   const handleTouchEnd = () => {
     if (touchStart === null || touchEnd === null) return;
     const diff = touchStart - touchEnd;
-    if (Math.abs(diff) > 50) {
+    if (Math.abs(diff) > 30) {
       if (diff > 0) goTo(current + 1);
       else goTo(current - 1);
+    } else {
+      setDragX(0);
     }
     setTouchStart(null);
     setTouchEnd(null);
@@ -55,19 +62,26 @@ function MenuCarousel() {
 
   const handleMouseDown = (e: React.MouseEvent) => {
     setTouchStart(e.clientX);
+    setDragX(0);
     setTouchEnd(null);
   };
 
   const handleMouseMove = (e: React.MouseEvent) => {
-    if (touchStart !== null) setTouchEnd(e.clientX);
+    if (touchStart !== null) {
+      const x = e.clientX;
+      setTouchEnd(x);
+      setDragX(x - touchStart);
+    }
   };
 
   const handleMouseUp = () => {
     if (touchStart === null || touchEnd === null) return;
     const diff = touchStart - touchEnd;
-    if (Math.abs(diff) > 50) {
+    if (Math.abs(diff) > 30) {
       if (diff > 0) goTo(current + 1);
       else goTo(current - 1);
+    } else {
+      setDragX(0);
     }
     setTouchStart(null);
     setTouchEnd(null);
@@ -94,6 +108,21 @@ function MenuCarousel() {
             if (offset < -len / 2) offset += len;
             const absOffset = Math.abs(offset);
             const isActive = offset === 0;
+
+            let xOffset = offset * (isMobile ? 30 : 60);
+            let zOffset = isActive ? 0 : -(isMobile ? 60 : 120) - absOffset * (isMobile ? 30 : 60);
+            let rotY = offset * (isMobile ? -6 : -12);
+
+            if (isActive && dragX !== 0) {
+              xOffset += dragX * 0.4;
+            }
+            if (!isActive && dragX !== 0) {
+              const dir = offset > 0 ? 1 : -1;
+              const peek = Math.min(Math.abs(dragX) * 0.3, 40);
+              xOffset += dir * peek;
+              zOffset -= peek * 0.5;
+            }
+
             return (
               <img
                 key={i}
@@ -103,21 +132,16 @@ function MenuCarousel() {
                 loading="lazy"
                 className={`menu-carousel-slide ${isActive ? "active" : ""}`}
                 style={{
-                  transform: isMobile
-                    ? `
-                      translateX(${offset * 30}px)
-                      translateZ(${isActive ? 0 : -60 - absOffset * 30}px)
-                      rotateY(${offset * -6}deg)
-                    `
-                    : `
-                      translateX(${offset * 60}px)
-                      translateZ(${isActive ? 0 : -120 - absOffset * 60}px)
-                      rotateY(${offset * -12}deg)
-                    `,
+                  transform: `
+                    translateX(${xOffset}px)
+                    translateZ(${zOffset}px)
+                    rotateY(${rotY}deg)
+                  `,
                   opacity: Math.max(0.15, 1 - absOffset * 0.25),
                   zIndex: 10 - absOffset,
                   filter: isActive ? "none" : "brightness(0.55)",
                   pointerEvents: isActive ? "auto" : "none",
+                  transition: touchStart !== null ? "none" : "transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94), opacity 0.4s ease, filter 0.4s ease",
                 }}
               />
             );
