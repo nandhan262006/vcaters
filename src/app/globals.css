@@ -127,6 +127,16 @@ a {
   z-index: 2;
   text-align: center;
   color: #fff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.hero-logo {
+  width: 260px;
+  height: auto;
+  margin-bottom: 20px;
+  filter: brightness(0) invert(1);
 }
 
 .hero-badge {
@@ -991,43 +1001,88 @@ a {
 
 .footer-content {
   display: grid;
-  grid-template-columns: 1fr 2fr;
-  gap: 60px;
+  grid-template-columns: 2fr 1fr 1.5fr;
+  gap: 50px;
   max-width: 1200px;
   margin: 0 auto;
 }
 
-.footer-left {
+.footer-brand {
+  text-align: left;
+}
+
+.footer-desc {
+  font-size: 14px;
+  line-height: 1.7;
+  color: #aaa;
+  max-width: 340px;
+  margin-bottom: 16px;
+}
+
+.footer-heading {
+  font-family: "Belgiano Serif", serif;
+  font-size: 20px;
+  font-weight: 600;
+  margin-bottom: 16px;
+  color: #fff;
+}
+
+.footer-links {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.footer-links a {
+  color: #ccc;
+  font-size: 14px;
+  text-decoration: none;
+  transition: color 0.3s;
+}
+
+.footer-links a:hover {
+  color: #fff;
+}
+
+.footer-contact {
   text-align: left;
 }
 
 .footer-phone {
-  font-size: 24px;
+  font-size: 20px;
   font-weight: 700;
-  margin-top: 20px;
+  margin-bottom: 8px;
 }
 
 .footer-phone a {
   color: #fff;
+  text-decoration: none;
 }
 
-.footer-right {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 30px;
+.footer-phone a:hover {
+  text-decoration: underline;
 }
 
 .footer-address {
   font-size: 14px;
-  line-height: 1.6;
+  line-height: 1.7;
   color: #ccc;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
+}
+
+.footer-hours {
+  font-size: 13px;
+  color: #4caf50;
+  font-weight: 600;
+  display: inline-block;
+  background: rgba(76, 175, 80, 0.12);
+  padding: 4px 12px;
+  border-radius: 100px;
 }
 
 .footer-social {
   display: flex;
   gap: 8px;
-  margin-top: 20px;
 }
 
 .footer-social a {
@@ -1043,12 +1098,12 @@ a {
 }
 
 .footer-social a:hover {
-  background: var(--red);
+  background: #25d366;
 }
 
 .footer-social svg {
-  width: 18px;
-  height: 18px;
+  width: 20px;
+  height: 20px;
   fill: currentColor;
 }
 
@@ -1068,27 +1123,28 @@ a {
   gap: 8px;
 }
 
-.footer-bottom a {
-  color: #ccc;
-  font-size: 14px;
-}
-
-.footer-bottom a:hover {
-  color: #fff;
-}
-
 .footer-bottom-links {
   display: flex;
   gap: 20px;
 }
 
-.footer-credit {
-  font-size: 14px;
+.footer-link-btn {
+  background: none;
+  border: none;
   color: #ccc;
+  font-size: 14px;
+  cursor: pointer;
+  padding: 0;
+  transition: color 0.3s;
 }
 
-.footer-credit a {
+.footer-link-btn:hover {
   color: #fff;
+}
+
+.footer-credit {
+  font-size: 14px;
+  color: #888;
 }
 
 /* Popup overlay */
