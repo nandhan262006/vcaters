@@ -28,7 +28,6 @@ body {
   font-family: "Roboto", sans-serif;
   font-size: 16px;
   line-height: 1.5;
-  overflow-x: hidden;
 }
 
 img {
@@ -581,7 +580,6 @@ a {
   margin: 30px auto;
   padding: 0 60px;
   position: relative;
-  overflow-x: hidden;
 }
 
 .menu-carousel-scene {
@@ -608,13 +606,13 @@ a {
 
 .menu-carousel-slide {
   position: absolute;
-  width: 65%;
-  max-width: 500px;
+  width: 60%;
+  max-width: 450px;
   border-radius: 12px;
   object-fit: contain;
   background: #fff;
   box-shadow: 0 10px 40px rgba(0,0,0,0.25);
-  transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94), opacity 0.5s ease, filter 0.5s ease;
+  transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94), opacity 0.4s ease, filter 0.4s ease;
   backface-visibility: hidden;
   will-change: transform, opacity;
 }

@@ -97,9 +97,9 @@ function MenuCarousel() {
                 className={`menu-carousel-slide ${isActive ? "active" : ""}`}
                 style={{
                   transform: `
-                    translateX(${offset * (isMobile ? 30 : 60)}px)
-                    translateZ(${isActive ? 0 : -(isMobile ? 60 : 120) - absOffset * (isMobile ? 30 : 60)}px)
-                    rotateY(${offset * (isMobile ? -6 : -12)}deg)
+                    translateX(${offset * (isMobile ? 15 : 30)}px)
+                    translateZ(${isActive ? 0 : -(isMobile ? 60 : 100)}px)
+                    rotateY(${offset * (isMobile ? -3 : -6)}deg)
                   `,
                   opacity: Math.max(0.15, 1 - absOffset * 0.25),
                   zIndex: 10 - absOffset,
