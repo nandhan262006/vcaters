@@ -5,12 +5,12 @@ import { useState, useRef, useCallback, useEffect } from "react";
 const ASSETS = "https://talasilacaterers.com/wp-content/uploads/2024/09";
 
 const menuImages = [
-  "/menu1.png",
-  "/menu2.png",
-  "/menu3.png",
-  "/menu4.png",
-  "/menu5.png",
-  "/menu6.png",
+  "/menu1.webp",
+  "/menu2.webp",
+  "/menu3.webp",
+  "/menu4.webp",
+  "/menu5.webp",
+  "/menu6.webp",
 ];
 
 function MenuCarousel() {
@@ -100,6 +100,7 @@ function MenuCarousel() {
                 src={src}
                 alt={`Menu ${i + 1}`}
                 draggable={false}
+                loading="lazy"
                 className={`menu-carousel-slide ${isActive ? "active" : ""}`}
                 style={{
                   transform: isMobile
@@ -158,7 +159,7 @@ export default function Home() {
       {/* Header */}
       <header className="header">
         <div className="header-logo">
-          <img src="/vcaters.png" alt="V Catering & Events" width={150} height={60} />
+          <img src="/vcaters.webp" alt="V Catering & Events" width={150} height={60} />
         </div>
         <div className="header-right">
           <a href="https://wa.me/918686860658" target="_blank" rel="noopener noreferrer" className="phone-btn">
@@ -175,12 +176,12 @@ export default function Home() {
 
       {/* Hero */}
       <section className="hero">
-        <video className="hero-video" autoPlay muted loop playsInline>
+        <video className="hero-video" autoPlay muted loop playsInline preload="auto">
           <source src="https://talasilacaterers.com/wp-content/uploads/2024/09/2371908_Pastries_Desserts_1280x720.mp4" type="video/mp4" />
         </video>
         <div className="hero-overlay" />
         <div className="hero-content">
-          <img src="/vcaters.png" alt="V Catering & Events" className="hero-logo" />
+          <img src="/vcaters.webp" alt="V Catering & Events" className="hero-logo" fetchPriority="high" />
           <div className="hero-badge">
             <span className="hero-stars">★★★★★</span>
             <span className="hero-rating">4.9</span>
@@ -208,7 +209,7 @@ export default function Home() {
               </p>
 
               <div className="about-red-subrow">
-                <img src="/justv.png" alt="" width={90} height={90} />
+                <img src="/justv.webp" alt="" width={90} height={90} loading="lazy" />
                 <h3 className="about-red-subheading">About Us</h3>
                 <img src={`${ASSETS}/Group-32.svg`} alt="" width={327} height={5} style={{ maxWidth: "70%" }} />
               </div>
@@ -244,7 +245,7 @@ export default function Home() {
       {/* Our Approach */}
       <section className="approach-section">
         <div className="section-title-row">
-          <img src="/justv.png" alt="" width={90} height={90} />
+          <img src="/justv.webp" alt="" width={90} height={90} loading="lazy" />
           <h2 className="section-title">Our Approach</h2>
           <span className="section-title-line"><img src={`${ASSETS}/Group-32-1.svg`} alt="" width={327} height={5} /></span>
         </div>
@@ -256,7 +257,7 @@ export default function Home() {
       {/* Why V Catering & Events */}
       <section className="why-section">
         <div className="section-title-row">
-          <img src="/justv.png" alt="" width={90} height={90} />
+          <img src="/justv.webp" alt="" width={90} height={90} loading="lazy" />
           <h2 className="section-title">Why V Catering &amp; Events</h2>
           <span className="section-title-line"><img src={`${ASSETS}/Group-33.svg`} alt="" width={327} height={5} /></span>
         </div>
@@ -305,7 +306,7 @@ export default function Home() {
       {/* Video Gallery */}
       <section className="video-gallery">
         <div className="section-title-row">
-          <img src="/justv.png" alt="" width={90} height={90} />
+          <img src="/justv.webp" alt="" width={90} height={90} loading="lazy" />
           <h2 className="section-title">Video Gallery</h2>
           <span className="section-title-line"><img src={`${ASSETS}/Group-33.svg`} alt="" width={327} height={5} /></span>
         </div>
@@ -317,7 +318,7 @@ export default function Home() {
       {/* Menu Carousel */}
       <section className="menu-section">
         <div className="section-title-row" style={{ padding: "0 40px" }}>
-          <img src="/justv.png" alt="" width={90} height={90} />
+          <img src="/justv.webp" alt="" width={90} height={90} loading="lazy" />
           <h2 className="section-title">Our Menu</h2>
           <span className="section-title-line"><img src={`${ASSETS}/Group-33.svg`} alt="" width={327} height={5} /></span>
         </div>
@@ -327,7 +328,7 @@ export default function Home() {
       {/* Testimonials */}
       <section className="testimonials-section">
         <div className="section-title-row">
-          <img src="/justv.png" alt="" width={90} height={90} />
+          <img src="/justv.webp" alt="" width={90} height={90} loading="lazy" />
           <h2 className="section-title">What Our Happy Clients Say</h2>
           <span className="section-title-line"><img src={`${ASSETS}/Group-33.svg`} alt="" width={327} height={5} /></span>
         </div>
@@ -348,7 +349,7 @@ export default function Home() {
       {/* Get in Touch */}
       <section id="form" className="form-section">
         <div className="section-title-row">
-          <img src="/justv.png" alt="" width={90} height={90} />
+          <img src="/justv.webp" alt="" width={90} height={90} loading="lazy" />
           <h2 className="section-title" style={{ color: "#fff" }}>Book via WhatsApp</h2>
           <span className="section-title-line"><img src={`${ASSETS}/Group-33.svg`} alt="" width={327} height={5} style={{ filter: "brightness(0) invert(1)" }} /></span>
         </div>
@@ -371,7 +372,7 @@ export default function Home() {
       {/* Locations */}
       <section className="locations-section">
         <div className="section-title-row">
-          <img src="/justv.png" alt="" width={90} height={90} />
+          <img src="/justv.webp" alt="" width={90} height={90} loading="lazy" />
           <h2 className="section-title">Locations</h2>
           <span className="section-title-line"><img src={`${ASSETS}/Group-33.svg`} alt="" width={327} height={5} /></span>
         </div>
@@ -401,7 +402,7 @@ export default function Home() {
       <footer className="footer">
         <div className="footer-content">
           <div className="footer-col footer-brand">
-            <img src="/vcaters.png" alt="V Catering & Events" width={150} height={60} style={{ marginBottom: 12 }} />
+            <img src="/vcaters.webp" alt="V Catering & Events" width={150} height={60} style={{ marginBottom: 12 }} />
             <p className="footer-desc">
               Hyderabad's premier catering service with 2K+ Google reviews. Authentic flavours for every celebration — weddings, corporate events, and private gatherings.
             </p>
@@ -451,7 +452,7 @@ export default function Home() {
           <div className="popup-content">
             <button onClick={() => setShowPrivacy(false)} className="popup-close">&times;</button>
             <div className="popup-logo">
-              <img src="/vcaters.png" alt="" width={175} height={80} />
+              <img src="/vcaters.webp" alt="" width={175} height={80} />
             </div>
             <h2 className="popup-heading">PRIVACY POLICY</h2>
             <p className="popup-subheading">
@@ -493,7 +494,7 @@ export default function Home() {
           <div className="popup-content">
             <button onClick={() => setShowTerms(false)} className="popup-close">&times;</button>
             <div className="popup-logo">
-              <img src="/vcaters.png" alt="" width={175} height={80} />
+              <img src="/vcaters.webp" alt="" width={175} height={80} />
             </div>
             <h2 className="popup-heading">Terms &amp; Conditions</h2>
             <p className="popup-subheading">

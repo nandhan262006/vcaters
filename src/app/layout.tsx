@@ -112,6 +112,12 @@ export default function RootLayout({
           href="https://fonts.cdnfonts.com/css/belgiano-serif"
           rel="stylesheet"
         />
+        <link rel="preconnect" href="https://talasilacaterers.com" />
+        <link
+          rel="preload"
+          as="video"
+          href="https://talasilacaterers.com/wp-content/uploads/2024/09/2371908_Pastries_Desserts_1280x720.mp4"
+        />
         <meta
           name="viewport"
           content="width=device-width, initial-scale=1.0, viewport-fit=cover"
