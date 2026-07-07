@@ -200,8 +200,8 @@ export default function Home() {
 
       {/* Hero */}
       <section className="hero">
-        <video className="hero-video" autoPlay muted loop playsInline preload="auto">
-          <source src="https://talasilacaterers.com/wp-content/uploads/2024/09/2371908_Pastries_Desserts_1280x720.mp4" type="video/mp4" />
+        <video className="hero-video" autoPlay muted loop playsInline preload="auto" poster="/vcaters.webp">
+          <source src="/hero.mp4" type="video/mp4" />
         </video>
         <div className="hero-overlay" />
         <div className="hero-content">
