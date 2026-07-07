@@ -588,7 +588,7 @@ a {
   cursor: grab;
   user-select: none;
   touch-action: none;
-  height: 500px;
+  height: 520px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -606,8 +606,9 @@ a {
 
 .menu-carousel-slide {
   position: absolute;
-  width: 60%;
-  max-width: 450px;
+  width: auto;
+  max-width: min(85vw, 500px);
+  height: 100%;
   border-radius: 12px;
   object-fit: contain;
   background: #fff;
@@ -1299,7 +1300,7 @@ a {
   }
 
   .menu-carousel-scene {
-    height: 380px;
+    height: 400px;
   }
 
   .footer-content {
@@ -1414,7 +1415,7 @@ a {
   }
 
   .menu-carousel-scene {
-    height: 350px;
+    height: 380px;
   }
 
   .menu-carousel-btn {
@@ -1532,7 +1533,7 @@ a {
   }
 
   .menu-carousel-scene {
-    height: 280px;
+    height: 320px;
   }
 
   .menu-carousel-btn {

@@ -15,17 +15,9 @@ const menuImages = [
 
 function MenuCarousel() {
   const [current, setCurrent] = useState(0);
-  const [isMobile, setIsMobile] = useState(false);
   const dragState = useRef({ start: 0, current: 0, isDragging: false });
   const trackRef = useRef<HTMLDivElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const check = () => setIsMobile(window.innerWidth < 768);
-    check();
-    window.addEventListener("resize", check);
-    return () => window.removeEventListener("resize", check);
-  }, []);
 
   const goTo = useCallback((index: number) => {
     if (index < 0) index = menuImages.length - 1;
@@ -96,14 +88,12 @@ function MenuCarousel() {
                 loading="lazy"
                 className={`menu-carousel-slide ${isActive ? "active" : ""}`}
                 style={{
-                  transform: `
-                    translateX(${offset * (isMobile ? 15 : 30)}px)
-                    translateZ(${isActive ? 0 : -(isMobile ? 60 : 100)}px)
-                    rotateY(${offset * (isMobile ? -3 : -6)}deg)
-                  `,
-                  opacity: Math.max(0.15, 1 - absOffset * 0.25),
+                  transform: isActive
+                    ? "translateX(0) translateZ(0) scale(1)"
+                    : `translateX(${offset > 0 ? "40" : "-40"}px) translateZ(-120px) scale(0.8)`,
+                  opacity: Math.max(0, 1 - absOffset * 0.3),
                   zIndex: 10 - absOffset,
-                  filter: isActive ? "none" : "brightness(0.55)",
+                  filter: isActive ? "none" : "brightness(0.5)",
                   pointerEvents: isActive ? "auto" : "none",
                 }}
               />
