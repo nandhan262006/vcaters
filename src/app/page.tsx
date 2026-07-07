@@ -15,10 +15,9 @@ const menuImages = [
 
 function MenuCarousel() {
   const [current, setCurrent] = useState(0);
-  const [touchStart, setTouchStart] = useState<number | null>(null);
-  const [touchEnd, setTouchEnd] = useState<number | null>(null);
-  const [dragX, setDragX] = useState(0);
   const [isMobile, setIsMobile] = useState(false);
+  const dragState = useRef({ start: 0, current: 0, isDragging: false });
+  const trackRef = useRef<HTMLDivElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -32,60 +31,40 @@ function MenuCarousel() {
     if (index < 0) index = menuImages.length - 1;
     if (index >= menuImages.length) index = 0;
     setCurrent(index);
-    setDragX(0);
+    if (trackRef.current) trackRef.current.style.transform = "";
   }, []);
 
-  const handleTouchStart = (e: React.TouchEvent) => {
-    setTouchStart(e.touches[0].clientX);
-    setDragX(0);
-    setTouchEnd(null);
+  const handleDragStart = (x: number) => {
+    dragState.current = { start: x, current: x, isDragging: true };
+    if (trackRef.current) trackRef.current.style.transition = "none";
   };
 
-  const handleTouchMove = (e: React.TouchEvent) => {
-    const x = e.touches[0].clientX;
-    setTouchEnd(x);
-    if (touchStart !== null) setDragX(x - touchStart);
+  const handleDragMove = (x: number) => {
+    if (!dragState.current.isDragging) return;
+    dragState.current.current = x;
+    const dx = x - dragState.current.start;
+    if (trackRef.current) trackRef.current.style.transform = `translateX(${dx * 0.4}px)`;
   };
 
-  const handleTouchEnd = () => {
-    if (touchStart === null || touchEnd === null) return;
-    const diff = touchStart - touchEnd;
-    if (Math.abs(diff) > 30) {
+  const handleDragEnd = () => {
+    if (!dragState.current.isDragging) return;
+    dragState.current.isDragging = false;
+    const diff = dragState.current.start - dragState.current.current;
+    if (trackRef.current) trackRef.current.style.transition = "transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94)";
+    if (Math.abs(diff) > 25) {
       if (diff > 0) goTo(current + 1);
       else goTo(current - 1);
     } else {
-      setDragX(0);
-    }
-    setTouchStart(null);
-    setTouchEnd(null);
-  };
-
-  const handleMouseDown = (e: React.MouseEvent) => {
-    setTouchStart(e.clientX);
-    setDragX(0);
-    setTouchEnd(null);
-  };
-
-  const handleMouseMove = (e: React.MouseEvent) => {
-    if (touchStart !== null) {
-      const x = e.clientX;
-      setTouchEnd(x);
-      setDragX(x - touchStart);
+      if (trackRef.current) trackRef.current.style.transform = "";
     }
   };
 
-  const handleMouseUp = () => {
-    if (touchStart === null || touchEnd === null) return;
-    const diff = touchStart - touchEnd;
-    if (Math.abs(diff) > 30) {
-      if (diff > 0) goTo(current + 1);
-      else goTo(current - 1);
-    } else {
-      setDragX(0);
-    }
-    setTouchStart(null);
-    setTouchEnd(null);
-  };
+  const handleTouchStart = (e: React.TouchEvent) => handleDragStart(e.touches[0].clientX);
+  const handleTouchMove = (e: React.TouchEvent) => handleDragMove(e.touches[0].clientX);
+  const handleTouchEnd = () => handleDragEnd();
+  const handleMouseDown = (e: React.MouseEvent) => handleDragStart(e.clientX);
+  const handleMouseMove = (e: React.MouseEvent) => handleDragMove(e.clientX);
+  const handleMouseUp = () => handleDragEnd();
 
   return (
     <div className="menu-carousel-wrap">
@@ -98,9 +77,9 @@ function MenuCarousel() {
         onMouseDown={handleMouseDown}
         onMouseMove={handleMouseMove}
         onMouseUp={handleMouseUp}
-        onMouseLeave={() => { setTouchStart(null); setTouchEnd(null); }}
+        onMouseLeave={() => { if (dragState.current.isDragging) handleDragEnd(); }}
       >
-        <div className="menu-carousel-track">
+        <div className="menu-carousel-track" ref={trackRef}>
           {menuImages.map((src, i) => {
             const len = menuImages.length;
             let offset = i - current;
@@ -108,21 +87,6 @@ function MenuCarousel() {
             if (offset < -len / 2) offset += len;
             const absOffset = Math.abs(offset);
             const isActive = offset === 0;
-
-            let xOffset = offset * (isMobile ? 30 : 60);
-            let zOffset = isActive ? 0 : -(isMobile ? 60 : 120) - absOffset * (isMobile ? 30 : 60);
-            let rotY = offset * (isMobile ? -6 : -12);
-
-            if (isActive && dragX !== 0) {
-              xOffset += dragX * 0.4;
-            }
-            if (!isActive && dragX !== 0) {
-              const dir = offset > 0 ? 1 : -1;
-              const peek = Math.min(Math.abs(dragX) * 0.3, 40);
-              xOffset += dir * peek;
-              zOffset -= peek * 0.5;
-            }
-
             return (
               <img
                 key={i}
@@ -133,15 +97,14 @@ function MenuCarousel() {
                 className={`menu-carousel-slide ${isActive ? "active" : ""}`}
                 style={{
                   transform: `
-                    translateX(${xOffset}px)
-                    translateZ(${zOffset}px)
-                    rotateY(${rotY}deg)
+                    translateX(${offset * (isMobile ? 30 : 60)}px)
+                    translateZ(${isActive ? 0 : -(isMobile ? 60 : 120) - absOffset * (isMobile ? 30 : 60)}px)
+                    rotateY(${offset * (isMobile ? -6 : -12)}deg)
                   `,
                   opacity: Math.max(0.15, 1 - absOffset * 0.25),
                   zIndex: 10 - absOffset,
                   filter: isActive ? "none" : "brightness(0.55)",
                   pointerEvents: isActive ? "auto" : "none",
-                  transition: touchStart !== null ? "none" : "transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94), opacity 0.4s ease, filter 0.4s ease",
                 }}
               />
             );

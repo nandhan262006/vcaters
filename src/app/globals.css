@@ -587,6 +587,7 @@ a {
   overflow: visible;
   cursor: grab;
   user-select: none;
+  touch-action: none;
   height: 500px;
   display: flex;
   align-items: center;
